@@ -1,19 +1,10 @@
-import React, {Suspense} from 'react'
-import { UserList } from './UserList'
-import { PostList } from './PostsList'
+import { getCurrentUser } from "@/modules/auth/auth.service";
+import { redirect } from "next/navigation";
 
-const Dashboard = () => {
-  return (
-    <div>
-      <h1>Dashboard</h1>
-      <Suspense fallback={<p>this is userList loading...</p>}>
-        <UserList/>
-      </Suspense>
-      <Suspense fallback={<p>this is posts loading...</p>}>
-        <PostList/>
-      </Suspense>
-    </div>
-  )
+export default async function Dashboard() {
+  const user = getCurrentUser();
+
+  if (!user) redirect("/login");
+
+  return <h1>Welcome user</h1>;
 }
-
-export default Dashboard
